@@ -1,0 +1,19 @@
+{
+  "name": "career-canvas-ai-services",
+  "version": "1.0.0",
+  "description": "AI services for Career Canvas platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "axios": "^1.4.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "openai": "^3.2.1"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
+  }
+}
