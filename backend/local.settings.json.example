@@ -1,0 +1,20 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "GOOGLE_CLIENT_ID": "your_google_client_id_here",
+    "GOOGLE_CLIENT_SECRET": "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", 
+    "GOOGLE_REDIRECT_URI": "http://localhost:3000/auth/callback",
+    "MICROSOFT_CLIENT_ID": "your_microsoft_client_id_here",
+    "MICROSOFT_CLIENT_SECRET": "your_microsoft_client_secret_here",
+    "MICROSOFT_REDIRECT_URI": "http://localhost:3000/auth/callback",
+    "MICROSOFT_TENANT_ID": "common",
+    "JWT_SECRET": "your_super_secret_jwt_key_change_this_in_production",
+    "JWT_EXPIRES_IN": "7d",
+    "MONGODB_CONNECTION_STRING": "your_mongodb_connection_string_here"
+  },
+  "Host": {
+    "CORS": "*"
+  }
+}

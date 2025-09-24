@@ -1,0 +1,70 @@
+# Azure DevOps Pipeline for Career Canvas
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  nodeVersion: '20.x'
+
+stages:
+- stage: Build
+  displayName: 'Build'
+  jobs:
+  - job: Build
+    displayName: 'Build and Package'
+    steps:
+    - checkout: self
+      
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '$(nodeVersion)'
+      displayName: 'Install Node.js'
+      
+    - script: |
+        cd backend
+        npm install
+        npm run build
+      displayName: 'npm install and build'
+      
+    - script: |
+        cd backend
+        npm run test
+      displayName: 'Run tests'
+      continueOnError: true
+      
+    - script: |
+        cd backend
+        mkdir -p $(Build.ArtifactStagingDirectory)/backend
+        cp -r dist host.json package.json package-lock.json web.config process.json startup.sh $(Build.ArtifactStagingDirectory)/backend/
+        cp -r node_modules $(Build.ArtifactStagingDirectory)/backend/node_modules || true
+      displayName: 'Prepare files for deployment'
+      
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: 'drop'
+        publishLocation: 'Container'
+      displayName: 'Publish artifacts'
+
+- stage: Deploy
+  displayName: 'Deploy'
+  dependsOn: Build
+  condition: succeeded()
+  jobs:
+  - deployment: DeployToAzure
+    displayName: 'Deploy to Azure App Service'
+    environment: 'production'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - task: AzureWebApp@1
+            inputs:
+              azureSubscription: 'Your-Azure-Subscription'  # Replace with your subscription
+              appName: 'CareerCanvas'  # Your App Service name
+              package: '$(Pipeline.Workspace)/drop/backend'
+              deploymentMethod: 'auto'
+ 

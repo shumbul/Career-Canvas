@@ -1,0 +1,73 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.16/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.16",
+  "version": "1.0.0",
+  "id": "12345678-1234-5678-9012-123456789abc",
+  "packageName": "com.microsoft.careercanvas",
+  "developer": {
+    "name": "Career Canvas Team",
+    "websiteUrl": "https://careercanvas.azurewebsites.net",
+    "privacyUrl": "https://careercanvas.azurewebsites.net/privacy",
+    "termsOfUseUrl": "https://careercanvas.azurewebsites.net/terms"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "name": {
+    "short": "Career Canvas",
+    "full": "Career Canvas - AI-Powered Career Development"
+  },
+  "description": {
+    "short": "AI-powered career development platform with mentorship and storytelling",
+    "full": "Career Canvas is an innovative platform that empowers professionals to navigate their career journey through personalized AI insights, smart networking, and professional storytelling. Connect with mentors, share your career stories, and track your professional growth."
+  },
+  "accentColor": "#2563EB",
+  "bots": [],
+  "composeExtensions": [],
+  "configurableTabs": [],
+  "staticTabs": [
+    {
+      "entityId": "mentors",
+      "name": "Find Mentors",
+      "contentUrl": "https://careercanvas.azurewebsites.net/tabs/mentors",
+      "websiteUrl": "https://careercanvas.azurewebsites.net/mentors",
+      "scopes": [
+        "personal",
+        "team"
+      ]
+    },
+    {
+      "entityId": "stories",
+      "name": "Professional Stories",
+      "contentUrl": "https://careercanvas.azurewebsites.net/tabs/stories",
+      "websiteUrl": "https://careercanvas.azurewebsites.net/stories",
+      "scopes": [
+        "personal",
+        "team"
+      ]
+    },
+    {
+      "entityId": "progress",
+      "name": "Progress Tracking",
+      "contentUrl": "https://careercanvas.azurewebsites.net/tabs/progress",
+      "websiteUrl": "https://careercanvas.azurewebsites.net/progress",
+      "scopes": [
+        "personal",
+        "team"
+      ]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "careercanvas.azurewebsites.net",
+    "login.microsoftonline.com"
+  ],
+  "webApplicationInfo": {
+    "id": "87654321-4321-8765-2109-abcdef123456",
+    "resource": "https://careercanvas.azurewebsites.net"
+  }
+}

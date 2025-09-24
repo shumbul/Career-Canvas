@@ -1,0 +1,16 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "MONGODB_CONNECTION_STRING": "mongodb://localhost:27017/careercanvas",
+    "AZURE_OPENAI_API_KEY": "your_azure_openai_key_here",
+    "AZURE_OPENAI_ENDPOINT": "https://your-resource.openai.azure.com/",
+    "AZURE_OPENAI_DEPLOYMENT": "gpt-4",
+    "AZURE_OPENAI_API_VERSION": "2024-02-15-preview"
+  },
+  "Host": {
+    "CORS": "*",
+    "CORSCredentials": false
+  }
+}

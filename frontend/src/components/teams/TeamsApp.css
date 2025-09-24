@@ -1,0 +1,48 @@
+/* Teams App Specific Styles */
+
+.teams-app {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.teams-tab-container {
+  background-color: #ffffff;
+}
+
+.teams-indicator {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Override some global styles for Teams environment */
+.teams-app .max-w-7xl {
+  max-width: none;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Teams-specific responsive adjustments */
+@media (max-width: 768px) {
+  .teams-app {
+    padding: 0;
+  }
+  
+  .teams-tab-container {
+    margin: 0;
+    border-radius: 0;
+  }
+}
+
+/* Teams theme integration */
+.teams-app .bg-blue-600 {
+  background-color: #6264a7; /* Teams purple */
+}
+
+.teams-app .bg-green-600 {
+  background-color: #237b4b; /* Teams green */
+}
+
+.teams-app .bg-purple-600 {
+  background-color: #943670; /* Teams magenta */
+}

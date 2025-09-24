@@ -1,0 +1,79 @@
+# Career Canvas - Hotfix Deployment
+# Fast deployment for critical fixes
+
+name: Hotfix Deployment
+
+on:
+  push:
+    branches:
+      - hotfix/*
+  workflow_dispatch:
+    inputs:
+      hotfix_branch:
+        description: 'Hotfix branch to deploy'
+        required: true
+      deploy_to_production:
+        description: 'Deploy directly to production?'
+        type: boolean
+        default: false
+
+env:
+  AZURE_WEBAPP_NAME: 'CareerCanvas'
+  NODE_VERSION: '18.x'
+
+jobs:
+  hotfix-deploy:
+    name: Emergency Hotfix Deployment
+    runs-on: ubuntu-latest
+    environment: 
+      name: ${{ github.event.inputs.deploy_to_production && 'production' || 'staging' }}
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: ⚡ Checkout hotfix
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.hotfix_branch || github.ref }}
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: ⚡ Fast Build (Skip Tests)
+        run: |
+          # Quick build without extensive validation
+          cd frontend && npm ci --production && npm run build && cd ..
+          cd backend && npm ci --production && npm run build && cd ..
+          npm ci --production
+          
+          # Create minimal deployment package
+          mkdir -p deployment-package
+          cp index.js package.json deployment-package/
+          cp -r frontend/build deployment-package/build
+          cp -r backend/dist deployment-package/dist
+          cp backend/host.json deployment-package/
+
+      - name: 🔐 Azure Login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_79EF182CA2BA4AFC95372192166A099E }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_DD224BD36AFD4CABB528C37B0F2708FA }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_70926F53F26E4DF282C5CFC7DBAB15C3 }}
+
+      - name: 🚨 Deploy Hotfix
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          slot-name: ${{ github.event.inputs.deploy_to_production && 'Production' || 'staging' }}
+          package: ./deployment-package
+
+      - name: 📢 Hotfix Notification
+        run: |
+          echo "🚨 HOTFIX DEPLOYED 🚨"
+          echo "Branch: ${{ github.event.inputs.hotfix_branch || github.ref }}"
+          echo "Environment: ${{ github.event.inputs.deploy_to_production && 'PRODUCTION' || 'STAGING' }}"
+          echo "Deployed by: ${{ github.actor }}"
+          echo "Time: $(date -u)"

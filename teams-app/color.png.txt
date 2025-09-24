@@ -1,0 +1,3 @@
+# Placeholder for color.png
+# This should be a 192x192 colored icon for Career Canvas
+# Use a blue/purple gradient with a career/growth symbol

@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-azure-ad": "^4.3.5",
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "name": "career-canvas",
+  "version": "1.0.0",
+  "description": "Career Canvas - AI-powered career development platform",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "cd frontend && npm run build && cd ../backend && npm run build",
+    "install-all": "cd frontend && npm install && cd ../backend && npm install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "@azure/functions": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "career-development",
+    "mentorship",
+    "azure",
+    "react",
+    "typescript"
+  ],
+  "author": "Career Canvas Team",
+  "license": "MIT"
+}

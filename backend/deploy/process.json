@@ -1,0 +1,9 @@
+{
+  "name": "career-canvas",
+  "script": "index.js",
+  "instances": 1,
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": 8080
+  }
+}

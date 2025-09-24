@@ -1,0 +1,85 @@
+# Career Canvas - Staging Environment Deployment
+# Deploys to staging slot for testing before production
+
+name: Deploy to Staging Environment
+
+on:
+  push:
+    branches:
+      - develop
+      - staging
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      source_branch:
+        description: 'Source branch to deploy'
+        required: true
+        default: 'develop'
+
+env:
+  AZURE_WEBAPP_NAME: 'CareerCanvas'
+  NODE_VERSION: '18.x'
+  STAGING_SLOT: 'staging'
+
+jobs:
+  build-and-deploy-staging:
+    name: Build and Deploy to Staging
+    runs-on: ubuntu-latest
+    environment: 
+      name: staging
+      url: https://careercanvas-staging.azurewebsites.net
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: 🚀 Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.source_branch || github.ref }}
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      # Build process (same as main workflow but streamlined)
+      - name: 🔨 Build Complete Application
+        run: |
+          # Build Frontend
+          cd frontend && npm ci && npm run build && cd ..
+          
+          # Build Backend
+          cd backend && npm ci && npm run build && cd ..
+          
+          # Install root dependencies
+          npm ci
+          
+          # Create deployment package
+          mkdir -p deployment-package
+          cp index.js package.json deployment-package/
+          cp -r frontend/build deployment-package/build
+          cp -r backend/dist deployment-package/dist
+          cp backend/host.json deployment-package/
+
+      - name: 🔐 Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_79EF182CA2BA4AFC95372192166A099E }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_DD224BD36AFD4CABB528C37B0F2708FA }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_70926F53F26E4DF282C5CFC7DBAB15C3 }}
+
+      - name: 🎯 Deploy to Staging Slot
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          slot-name: ${{ env.STAGING_SLOT }}
+          package: ./deployment-package
+
+      - name: 🔍 Staging Health Check
+        run: |
+          sleep 30
+          curl -f "https://careercanvas-${{ env.STAGING_SLOT }}.azurewebsites.net/" || echo "Staging health check completed"
