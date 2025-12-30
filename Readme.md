@@ -85,7 +85,7 @@ Career-Canvas/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/aychaudhuri_microsoft/Career-Canvas.git
+git clone https://github.com/shumbul/Career-Canvas.git
 cd Career-Canvas
 ```
 
@@ -300,8 +300,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 📞 Contact
 
 - **Email**: team@careercanvas.ai
-- **GitHub**: [Career-Canvas Repository](https://github.com/aychaudhuri_microsoft/Career-Canvas)
-- **Documentation**: [Project Wiki](https://github.com/aychaudhuri_microsoft/Career-Canvas/wiki)
+- **GitHub**: [Career-Canvas Repository](https://github.com/shumbul/Career-Canvas)
+- **Documentation**: [Project Wiki](https://github.com/shumbul/Career-Canvas/wiki)
 
 ## 🙏 Acknowledgments
 

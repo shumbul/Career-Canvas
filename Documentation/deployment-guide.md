@@ -38,7 +38,7 @@ This document provides comprehensive instructions for deploying the Career Canva
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/aychaudhuri_microsoft/Career-Canvas.git
+git clone https://github.com/shumbul/Career-Canvas.git
 cd Career-Canvas
 ```
 
